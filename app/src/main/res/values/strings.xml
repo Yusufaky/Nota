@@ -7,4 +7,6 @@
     <string name="add_word">Add Grade</string>
     <string name="grades">Grades</string>
     <string name="map">Map</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
