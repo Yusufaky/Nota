@@ -11,7 +11,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val bntNotas = findViewById<Button>(R.id.pagNotas)
+        val bntMapa = findViewById<Button>(R.id.pagMapa)
         bntNotas.setOnClickListener {
+            val intent = Intent(this@MainActivity, Ecra::class.java)
+            startActivity(intent)
+        }
+        bntMapa.setOnClickListener {
             val intent = Intent(this@MainActivity, Ecra::class.java)
             startActivity(intent)
         }
