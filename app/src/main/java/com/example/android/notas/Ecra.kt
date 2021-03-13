@@ -3,6 +3,7 @@ package com.example.android.notas
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -42,7 +43,16 @@ class Ecra : AppCompatActivity() {
             val intent = Intent(this@Ecra, NovaNotaActivity::class.java)
             startActivityForResult(intent, newNotaActivityRequestCode)
         }
+
+        val btnApagar = findViewById<Button>(R.id.btnDelete)
+/*
+        btnApagar.setOnClickListener{
+            NotaViewModel.deleteNota()
+            true
+        }
+*/
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
@@ -53,11 +63,10 @@ class Ecra : AppCompatActivity() {
                 NotaViewModel.insert(Nota)
             }
         } else {
-            Toast.makeText(
-                applicationContext,
-                R.string.empty_not_saved,
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(this, R.string.empty_not_saved, Toast.LENGTH_SHORT).show()
         }
+
     }
+
+
 }

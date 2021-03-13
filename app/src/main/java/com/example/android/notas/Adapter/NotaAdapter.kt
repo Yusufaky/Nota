@@ -19,7 +19,7 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NOTAS_COMPARAT
 
     override fun onBindViewHolder(holder: NotaViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.word)
+        holder.bind(current.nota)
     }
 
     class NotaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -45,7 +45,7 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NOTAS_COMPARAT
             }
 
             override fun areContentsTheSame(oldItem: Nota, newItem: Nota): Boolean {
-                return oldItem.word == newItem.word
+                return oldItem.nota == newItem.nota
             }
         }
     }

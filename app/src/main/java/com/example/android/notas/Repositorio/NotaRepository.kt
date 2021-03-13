@@ -11,9 +11,13 @@ class NotaRepository(private val notaDao: NotaDao) {
 
     val allNotas: Flow<List<Nota>> = notaDao.getAlphabetizedNotas()
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(nota: Nota) {
         notaDao.insert(nota)
     }
+
+    suspend fun deleteByNota(nota: Nota) {
+        notaDao.deleteNota(nota)
+    }
+
 }
