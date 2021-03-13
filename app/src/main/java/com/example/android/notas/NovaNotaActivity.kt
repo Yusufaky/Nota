@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.aplicacao.android.notas.R
 
 
 class NovaNotaActivity : AppCompatActivity() {

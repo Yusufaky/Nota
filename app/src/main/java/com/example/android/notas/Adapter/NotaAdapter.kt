@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.notas.R
+import com.aplicacao.android.notas.R
 import com.example.android.notas.entidade.Nota
 
 class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NOTAS_COMPARATOR) {

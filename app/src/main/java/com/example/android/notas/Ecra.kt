@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.aplicacao.android.notas.R
 import com.example.android.notas.Adapter.NotaAdapter
 import com.example.android.notas.ViewModel.NotaViewModel
 import com.example.android.notas.ViewModel.NotaViewModelFactory
