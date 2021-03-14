@@ -1,5 +1,3 @@
-
-
 package com.example.android.notas.bd
 
 import android.content.Context
@@ -12,7 +10,7 @@ import com.example.android.notas.Dao.NotaDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-@Database(entities = [Nota::class], version = 3)
+@Database(entities = [Nota::class], version = 5)
 abstract class NotaDatabase : RoomDatabase() {
 
     abstract fun NotaDao(): NotaDao

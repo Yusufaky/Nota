@@ -3,6 +3,7 @@ package com.example.android.notas.ViewModel
 import androidx.lifecycle.*
 import com.example.android.notas.entidade.Nota
 import com.example.android.roomwordssample.NotaRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NotaViewModel(private val repository: NotaRepository) : ViewModel() {
@@ -11,6 +12,10 @@ class NotaViewModel(private val repository: NotaRepository) : ViewModel() {
 
     fun insert(nota: Nota) = viewModelScope.launch {
         repository.insert(nota)
+    }
+
+    fun deleteByNota(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteNota(id)
     }
 }
 

@@ -12,12 +12,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NotaDao {
 
-    @Query("SELECT * FROM nota_database ORDER BY nota ASC")
+    @Query("SELECT * FROM nota_table")
     fun getAlphabetizedNotas(): Flow<List<Nota>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(nota: Nota)
 
-    @Query("DELETE FROM nota_database")
+    @Query("DELETE FROM nota_table")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM nota_table where id == :id")
+    suspend fun deleteByNota(id: Int)
 }
+

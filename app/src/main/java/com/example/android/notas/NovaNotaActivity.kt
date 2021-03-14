@@ -25,7 +25,7 @@ class NovaNotaActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val nota = editnotaView.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, nota)
+                replyIntent.putExtra(EXTRA_REPLY_Nota, nota)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
@@ -33,6 +33,6 @@ class NovaNotaActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_REPLY = "com.example.android.notalistsql.REPLY"
+        const val EXTRA_REPLY_Nota = "com.example.android.nota"
     }
 }
