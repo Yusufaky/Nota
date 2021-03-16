@@ -1,10 +1,7 @@
 
 package com.example.android.notas.Dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.android.notas.entidade.Nota
 import kotlinx.coroutines.flow.Flow
 
@@ -23,5 +20,10 @@ interface NotaDao {
 
     @Query("DELETE FROM nota_table where id == :id")
     suspend fun deleteByNota(id: Int)
+
+    @Query("UPDATE nota_table SET nota=:nota WHERE id == :id")
+    suspend fun updateNota(nota: String, id: Int)
+
+
 }
 

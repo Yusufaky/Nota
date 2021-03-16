@@ -1,5 +1,6 @@
 package com.example.android.notas.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.android.notas.entidade.Nota
 import com.example.android.roomwordssample.NotaRepository
@@ -15,7 +16,12 @@ class NotaViewModel(private val repository: NotaRepository) : ViewModel() {
     }
 
     fun deleteByNota(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d("IDNota", id.toString())
         repository.deleteNota(id)
+    }
+
+    fun updateNota(id: Int, nota: String) = viewModelScope.launch {
+        repository.updateNota(nota,id)
     }
 }
 

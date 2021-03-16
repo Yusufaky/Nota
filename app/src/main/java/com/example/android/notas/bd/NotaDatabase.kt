@@ -10,7 +10,7 @@ import com.example.android.notas.Dao.NotaDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-@Database(entities = [Nota::class], version = 5)
+@Database(entities = [Nota::class], version = 8)
 abstract class NotaDatabase : RoomDatabase() {
 
     abstract fun NotaDao(): NotaDao

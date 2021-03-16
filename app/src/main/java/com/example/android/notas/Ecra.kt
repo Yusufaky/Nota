@@ -3,6 +3,7 @@ package com.example.android.notas
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -31,13 +32,12 @@ class Ecra : AppCompatActivity() {
         setContentView(R.layout.activity_ecra_notas)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = NotaAdapter(this)
+        val adapter = NotaAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         NotaViewModel.allNotas.observe(this, Observer { Notas ->
-            // Update the cached copy of the words in the adapter.
-            Notas?.let { adapter.setNota(it) }
+            Notas?.let { adapter.submitList(it) }
         })
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
@@ -45,28 +45,28 @@ class Ecra : AppCompatActivity() {
             val intent = Intent(this@Ecra, NovaNotaActivity::class.java)
             startActivityForResult(intent, newNotaActivityRequestCode)
         }
-/*
-        val btnDelete = findViewById<Button>(R.id.btnDelete)
-        btnDelete.setOnClickListener {
-            NotaViewModel.deleteByNota()
-            true
-        }*/
+        adapter.setOnItemClick(object : NotaAdapter.onItemclick {
+            override fun onEditClick(position: Int){
+                //NotaViewModel.updateNota(position)
+            }
+
+            override fun onDeleteClick(position: Int){
+                NotaViewModel.deleteByNota(position)
+            }
+        })
     }
 
-    fun deleteNota(){
-        Toast.makeText(this, "MArcos", Toast.LENGTH_SHORT).show()
-    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == newNotaActivityRequestCode && resultCode == Activity.RESULT_OK) {
+
             val pnota = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Nota)
 
-            if (pnota!= null) {
+            if (pnota != null) {
                 val nota = Nota(nota = pnota)
                 NotaViewModel.insert(nota)
             }
-
         } else {
             Toast.makeText(
                     applicationContext,

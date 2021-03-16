@@ -1,6 +1,6 @@
 package com.example.android.roomwordssample
 
-import androidx.annotation.WorkerThread
+
 import com.example.android.notas.entidade.Nota
 import com.example.android.notas.Dao.NotaDao
 import kotlinx.coroutines.flow.Flow
@@ -20,4 +20,9 @@ class NotaRepository(private val notaDao: NotaDao) {
     suspend fun deleteNota(id: Int){
         notaDao.deleteByNota(id)
     }
+
+    suspend fun updateNota(nota: String, id: Int){
+        notaDao.updateNota(nota, id)
+    }
+
 }
