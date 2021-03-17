@@ -46,11 +46,14 @@ class Ecra : AppCompatActivity() {
             startActivityForResult(intent, newNotaActivityRequestCode)
         }
         adapter.setOnItemClick(object : NotaAdapter.onItemclick {
-            override fun onEditClick(position: Int){
-                //NotaViewModel.updateNota(position)
+            override fun onEditClick(position: Int) {
+                val intent = Intent(this@Ecra, NovaNotaActivity::class.java)
+                intent.putExtra("ID", position)
+                startActivityForResult(intent, 2)
+
             }
 
-            override fun onDeleteClick(position: Int){
+            override fun onDeleteClick(position: Int) {
                 NotaViewModel.deleteByNota(position)
             }
         })
@@ -67,7 +70,22 @@ class Ecra : AppCompatActivity() {
                 val nota = Nota(nota = pnota)
                 NotaViewModel.insert(nota)
             }
-        } else {
+        }
+
+        if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
+
+            val pnota = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Nota)
+            val id = data?.getIntExtra(NovaNotaActivity.EXTRA_REPLY_ID,0)
+            if (pnota != null) {
+                val nota = Nota(nota = pnota)
+                if (id != null) {
+                    Log.d("ITEM","Nota "+pnota +" "+id)
+                    NotaViewModel.updateNota(id,pnota)
+                }
+            }
+        }
+
+        else {
             Toast.makeText(
                     applicationContext,
                     R.string.empty_not_saved,

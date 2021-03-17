@@ -1,9 +1,5 @@
 package com.example.android.notas.Adapter
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aplicacao.android.notas.R
-import com.example.android.notas.EditarNota
-import com.example.android.notas.NovaNotaActivity
-import com.example.android.notas.ViewModel.NotaViewModel
 import com.example.android.notas.entidade.Nota
 
 class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator()) {
@@ -34,11 +27,9 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
     }
 
     override fun onBindViewHolder(holder: NotaViewHolder, position: Int) {
-
         val current = getItem(position)
 
         holder.bind(current.nota, current.id)
-
 
     }
 
@@ -49,7 +40,6 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
 
         var idItem: Int? = 0
 
-
         init {
             deleteItemView.setOnClickListener { v: View ->
 
@@ -58,15 +48,15 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
 
                     onItemclick.onDeleteClick(idItem!!)
                 }
-                Toast.makeText(v.context, " deele",Toast.LENGTH_LONG).show()
+                Toast.makeText(v.context, R.string.delete, Toast.LENGTH_SHORT).show()
             }
 
             upadateItemView.setOnClickListener { v: View ->
                 val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    onItemclick.onEditClick(position)
+                if (position != RecyclerView.NO_POSITION  && idItem != null) {
+                    onItemclick.onEditClick(idItem!!)
                 }
-                Toast.makeText(v.context," update", Toast.LENGTH_LONG).show()
+                Toast.makeText(v.context, R.string.updat, Toast.LENGTH_LONG).show()
             }
 
         }
@@ -74,8 +64,6 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
         fun bind(text1: String?, id: Int?) {
             notaItemView.text = text1
             idItem = id
-
-
         }
 
         companion object {

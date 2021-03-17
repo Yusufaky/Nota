@@ -18,9 +18,8 @@ class NovaNotaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_nota)
         val editnotaView = findViewById<EditText>(R.id.edit_nota)
-        var ss: String = intent.getStringExtra("id").toString()
+        var ss: Int = intent.getIntExtra("ID", 0)
         val button = findViewById<Button>(R.id.guardar)
-
         button.setOnClickListener {
             val replyIntent = Intent()
             if (TextUtils.isEmpty(editnotaView.text)) {
@@ -28,6 +27,8 @@ class NovaNotaActivity : AppCompatActivity() {
             } else {
                 val nota = editnotaView.text.toString()
                 replyIntent.putExtra(EXTRA_REPLY_Nota, nota)
+                replyIntent.putExtra(EXTRA_REPLY_ID, ss)
+
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
@@ -36,5 +37,6 @@ class NovaNotaActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_REPLY_Nota = "com.example.android.nota"
+        const val EXTRA_REPLY_ID = "com.example.android.id"
     }
 }
