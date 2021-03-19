@@ -65,9 +65,10 @@ class Ecra : AppCompatActivity() {
         if (requestCode == newNotaActivityRequestCode && resultCode == Activity.RESULT_OK) {
 
             val pnota = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Nota)
+            val pProblema = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Problema)
 
-            if (pnota != null) {
-                val nota = Nota(nota = pnota)
+            if (pnota != null && pProblema != null) {
+                val nota = Nota(nota = pnota, problema = pProblema)
                 NotaViewModel.insert(nota)
             }
         }
@@ -75,22 +76,20 @@ class Ecra : AppCompatActivity() {
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
             val pnota = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Nota)
+            val pProblema = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Problema)
             val id = data?.getIntExtra(NovaNotaActivity.EXTRA_REPLY_ID,0)
-            if (pnota != null) {
-                val nota = Nota(nota = pnota)
-                if (id != null) {
-                    Log.d("ITEM","Nota "+pnota +" "+id)
-                    NotaViewModel.updateNota(id,pnota)
-                }
-            }
-        }
+            if (pnota != null && pProblema!= null && id != null) {
 
-        else {
+                    NotaViewModel.updateNota(pnota, id, pProblema)
+
+            }
+        }else {
             Toast.makeText(
                     applicationContext,
                     R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show()
+                    Toast.LENGTH_SHORT).show()
         }
+
     }
 
 }

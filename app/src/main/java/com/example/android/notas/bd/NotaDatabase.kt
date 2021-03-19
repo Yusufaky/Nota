@@ -10,7 +10,7 @@ import com.example.android.notas.Dao.NotaDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-@Database(entities = [Nota::class], version = 8)
+@Database(entities = [Nota::class], version = 1)
 abstract class NotaDatabase : RoomDatabase() {
 
     abstract fun NotaDao(): NotaDao
@@ -31,8 +31,8 @@ abstract class NotaDatabase : RoomDatabase() {
                     NotaDatabase::class.java,
                     "nota_database"
                 )
-                    //.fallbackToDestructiveMigration()
-                    //.addCallback(NotaDatabaseCallback(scope))
+                    .fallbackToDestructiveMigration()
+                    .addCallback(NotaDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance

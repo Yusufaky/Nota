@@ -29,12 +29,13 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
     override fun onBindViewHolder(holder: NotaViewHolder, position: Int) {
         val current = getItem(position)
 
-        holder.bind(current.nota, current.id)
+        holder.bind(current.nota, current.problema, current.id)
 
     }
 
     class NotaViewHolder(itemView: View, onItemclick: onItemclick) : RecyclerView.ViewHolder(itemView) {
         private val notaItemView: TextView = itemView.findViewById(R.id.textView)
+        private val notaItemViewProblema: TextView = itemView.findViewById(R.id.textViewProblema)
         val deleteItemView: Button = itemView.findViewById(R.id.btnDelete)
         val upadateItemView: Button = itemView.findViewById(R.id.btnEdit)
 
@@ -56,13 +57,14 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
                 if (position != RecyclerView.NO_POSITION  && idItem != null) {
                     onItemclick.onEditClick(idItem!!)
                 }
-                Toast.makeText(v.context, R.string.updat, Toast.LENGTH_LONG).show()
+                Toast.makeText(v.context, R.string.updat, Toast.LENGTH_SHORT).show()
             }
 
         }
 
-        fun bind(text1: String?, id: Int?) {
+        fun bind(text1: String?, text2: String?, id: Int?) {
             notaItemView.text = text1
+            notaItemViewProblema.text = text2
             idItem = id
         }
 

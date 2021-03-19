@@ -20,8 +20,8 @@ class NotaViewModel(private val repository: NotaRepository) : ViewModel() {
         repository.deleteNota(id)
     }
 
-    fun updateNota(id: Int, nota: String) = viewModelScope.launch {
-        repository.updateNota(nota,id)
+    fun updateNota(nota: String, id: Int, problema: String) = viewModelScope.launch {
+        repository.updateNota(nota,id, problema)
     }
 }
 
