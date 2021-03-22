@@ -71,25 +71,25 @@ class Ecra : AppCompatActivity() {
                 val nota = Nota(nota = pnota, problema = pProblema)
                 NotaViewModel.insert(nota)
             }
+        }else if (requestCode == 1) {
+            Toast.makeText(applicationContext,
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_SHORT).show()
         }
 
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
             val pnota = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Nota)
             val pProblema = data?.getStringExtra(NovaNotaActivity.EXTRA_REPLY_Problema)
-            val id = data?.getIntExtra(NovaNotaActivity.EXTRA_REPLY_ID,0)
-            if (pnota != null && pProblema!= null && id != null) {
-
-                    NotaViewModel.updateNota(pnota, id, pProblema)
-
+            val id = data?.getIntExtra(NovaNotaActivity.EXTRA_REPLY_ID, 0)
+            if (pnota != null && pProblema != null && id != null) {
+                NotaViewModel.updateNota(pnota, id, pProblema)
             }
-        }else {
-            Toast.makeText(
-                    applicationContext,
+        }else if (requestCode == 2) {
+            Toast.makeText(applicationContext,
                     R.string.empty_not_saved,
                     Toast.LENGTH_SHORT).show()
         }
-
     }
 
 }
