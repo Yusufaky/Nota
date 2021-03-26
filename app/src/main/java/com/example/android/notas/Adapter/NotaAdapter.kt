@@ -17,7 +17,7 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
     }
 
     interface onItemclick {
-        fun onEditClick(position: Int)
+        fun onEditClick(position: Int, nota: String, problema: String)
 
         fun onDeleteClick(position: Int)
     }
@@ -55,7 +55,7 @@ class NotaAdapter : ListAdapter<Nota, NotaAdapter.NotaViewHolder>(NotaComparator
             upadateItemView.setOnClickListener { v: View ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION  && idItem != null) {
-                    onItemclick.onEditClick(idItem!!)
+                    onItemclick.onEditClick(idItem!!, notaItemView.text.toString(), notaItemViewProblema.text.toString())
                 }
                 Toast.makeText(v.context, R.string.updat, Toast.LENGTH_SHORT).show()
             }

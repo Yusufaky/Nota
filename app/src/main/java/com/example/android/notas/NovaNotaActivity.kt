@@ -20,6 +20,10 @@ class NovaNotaActivity : AppCompatActivity() {
         val editnotaView = findViewById<EditText>(R.id.edit_nota)
         val editnotaViewProblema = findViewById<EditText>(R.id.edit_problema)
         var id: Int = intent.getIntExtra("ID", 0)
+        var editNota = intent.getStringExtra("nota")
+        var editProblema = intent.getStringExtra("problema")
+        findViewById<EditText>(R.id.edit_nota).setText(editNota)
+        findViewById<EditText>(R.id.edit_problema).setText(editProblema)
         val button = findViewById<Button>(R.id.guardar)
         button.setOnClickListener {
             val replyIntent = Intent()

@@ -46,9 +46,11 @@ class Ecra : AppCompatActivity() {
             startActivityForResult(intent, newNotaActivityRequestCode)
         }
         adapter.setOnItemClick(object : NotaAdapter.onItemclick {
-            override fun onEditClick(position: Int) {
+            override fun onEditClick(position: Int, nota: String, problema: String) {
                 val intent = Intent(this@Ecra, NovaNotaActivity::class.java)
                 intent.putExtra("ID", position)
+                intent.putExtra("nota",nota)
+                intent.putExtra("problema",problema)
                 startActivityForResult(intent, 2)
 
             }
