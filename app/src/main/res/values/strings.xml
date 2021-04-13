@@ -11,4 +11,9 @@
     <string name="delete">Delete</string>
     <string name="updat">Update</string>
     <string name="descri_ao">Description</string>
+    <string name="loginTitulo">Login</string>
+    <string name="nameLogin">Name:</string>
+    <string name="passwordLogin">Password:</string>
+    <string name="passwordLoginHint">Password</string>
+    <string name="nomePasswordHint">Name</string>
 </resources>

@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.android.notas.EditarNota"></activity>
+        <activity android:name="com.example.android.notas.login"></activity>
+        <activity android:name="com.example.android.notas.EditarNota" />
         <activity android:name="com.example.android.notas.Ecra" />
         <activity
             android:name="com.example.android.notas.MainActivity"

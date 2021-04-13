@@ -12,4 +12,9 @@
     <string name="map">Mapa</string>
     <string name="updat">Atualizado</string>
     <string name="descri_ao">Descriçao</string>
+    <string name="loginTitulo">Login</string>
+    <string name="nameLogin">Nome:</string>
+    <string name="passwordLogin">Palavra-Passe:</string>
+    <string name="passwordLoginHint">Palavra-Passe</string>
+    <string name="nomePasswordHint">Nome</string>
 </resources>
