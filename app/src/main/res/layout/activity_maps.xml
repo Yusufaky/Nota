@@ -38,12 +38,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:contentDescription="Logut"
-            android:src="@drawable/ic_add_black_24dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:backgroundTint="#0296c7"
             app:tint="@android:color/white"
             app:layout_constraintBottom_toTopOf="@+id/btnAdd"
             app:layout_constraintEnd_toEndOf="@id/btnAdd"/>
-            //android:onClick="logout"/>
+            //android:onClick="sair"
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,5 +21,7 @@
     <string name="emailLogin">Inserir o email</string>
     <string name="pass_login">Inserir a password</string>
     <string name="Error_login">Dados invalidos</string>
-    <string name="Error_Error">Erro</string>
+    <string name="Error_Error">Errou</string>
+    <string name="errou">Não</string>
+    <string name="Done">sim</string>
 </resources>
