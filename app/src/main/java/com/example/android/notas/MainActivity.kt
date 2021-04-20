@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         bntMapa.setOnClickListener {
-            val intent = Intent(this@MainActivity, login::class.java)
+            val intent = Intent(this@MainActivity, Login::class.java)
             startActivity(intent)
         }
     }

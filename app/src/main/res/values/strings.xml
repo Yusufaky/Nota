@@ -11,9 +11,20 @@
     <string name="delete">Delete</string>
     <string name="updat">Update</string>
     <string name="descri_ao">Description</string>
+    <string name="emailLogin">Insert an email</string>
+
     <string name="loginTitulo">Login</string>
-    <string name="nameLogin">Name:</string>
+    <string name="nameLogin">Email:</string>
     <string name="passwordLogin">Password:</string>
     <string name="passwordLoginHint">Password</string>
-    <string name="nomePasswordHint">Name</string>
+    <string name="nomePasswordHint">Email</string>
+    <string name="loginshared">loginshared</string>
+    <string name="loginSharePreferences" translatable="false">LoginSharePreferences</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="pass_login">Insert a password</string>
+
+    <string name="novoEmail" translatable="false">emailshared</string>
+    <string name="user_id" translatable="false">idloginuser</string>
+    <string name="Error_login">Invalid data</string>
+    <string name="Error_Error">Error</string>
 </resources>
