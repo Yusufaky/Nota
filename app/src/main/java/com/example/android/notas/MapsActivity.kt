@@ -1,8 +1,15 @@
 package com.example.android.notas
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import com.aplicacao.android.notas.R
+import com.example.android.notas.api.EndPoints
+import com.example.android.notas.api.ServiceBuilder
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +29,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
     }
 
     /**
@@ -41,4 +50,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
+
+    fun sair(view: View) {
+
+        val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
+        )
+        with(sharedPref.edit()) {
+            putBoolean(getString(R.string.loginshared), false)
+            putString(getString(R.string.novoEmail), "")
+            commit()
+        }
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        Toast.makeText(this, R.string.logout, Toast.LENGTH_SHORT).show()
+    }
+
 }
