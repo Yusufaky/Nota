@@ -15,4 +15,8 @@ interface EndPoints {
     @POST("myslim/api/utilizador/login")
     fun postTest(@Field("email") first: String, @Field ("password") second: String): Call<OutputPost>
 
+    @GET("myslim/api/pontos")
+    fun getPontos(): Call<List<Pontos>>
+
+
 }
