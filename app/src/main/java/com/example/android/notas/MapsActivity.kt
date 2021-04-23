@@ -63,6 +63,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
         Toast.makeText(this, R.string.logout, Toast.LENGTH_SHORT).show()
     }
 

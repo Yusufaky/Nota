@@ -15,10 +15,12 @@ class MainActivity : AppCompatActivity() {
         bntNotas.setOnClickListener {
             val intent = Intent(this@MainActivity, Ecra::class.java)
             startActivity(intent)
+            finish()
         }
         bntMapa.setOnClickListener {
             val intent = Intent(this@MainActivity, Login::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }
