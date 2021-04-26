@@ -28,7 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var mapa: GoogleMap
     private lateinit var anomalia: List<Pontos>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,19 +56,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                         if (anomalia1.user_id == sharedPref.all[getString(R.string.user_id)]){
 
-                            mMap.addMarker(MarkerOptions()
+                            mapa.addMarker(MarkerOptions()
                                     .position(position)
                                     .title(anomalia1.nome)
-                                    .snippet(anomalia1.descricao + " " + anomalia1.foto + " " + anomalia1.user_id + " " + sharedPref.all[getString(R.string.user_id)].toString())
+                                    .snippet("Descrição: "+anomalia1.descricao)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
 
                             )
                         }else {
-                            mMap.addMarker(
+                            mapa.addMarker(
                                     MarkerOptions()
                                             .position(position)
                                             .title(anomalia1.nome)
-                                            .snippet(anomalia1.descricao + " " + anomalia1.foto + " " + anomalia1.user_id.toString())
+                                            .snippet("Descrição: "+anomalia1.descricao)
                             )
                         }
                     }
@@ -93,12 +93,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+        mapa = googleMap
 
         val zone = LatLng(41.637682, -8.697163)
         val zoomLevel = 15f
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
+        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
     }
 
     fun sair(view: View) {
@@ -111,7 +111,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             putString(getString(R.string.novoEmail), "")
             commit()
         }
-        var intent = Intent(this, MainActivity::class.java)
+        var intent = Intent(this, Login::class.java)
         startActivity(intent)
         finish()
         Toast.makeText(this, R.string.logout, Toast.LENGTH_SHORT).show()

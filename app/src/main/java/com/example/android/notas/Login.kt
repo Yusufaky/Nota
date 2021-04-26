@@ -61,10 +61,10 @@ class Login : AppCompatActivity() {
         call.enqueue(object : Callback<OutputPost> {
             override fun onResponse(call: Call<OutputPost>, response: Response<OutputPost>) {
                 if (response.isSuccessful) {
-                    val e: OutputPost = response.body()!!
+                    val dados: OutputPost = response.body()!!
 
 
-                    if (email.text.toString().equals(e.email) && (passwordInserida.text.toString().equals(e.password))) {
+                    if (email.text.toString() == (dados.email) && (passwordInserida.text.toString() == (dados.password))) {
                         startActivity(intent)
                         finish()
 
@@ -76,10 +76,10 @@ class Login : AppCompatActivity() {
                         with(sharedPref.edit()) {
                             putBoolean(getString(R.string.loginshared), true)
                             putString(getString(R.string.novoEmail), "${email.text}")
-                            putInt(getString(R.string.user_id), e.id)
+                            putInt(getString(R.string.user_id), dados.id)
                             commit()
                         }
-                    } else if (!(email.text.toString().equals(e.email) && (passwordInserida.text.toString().equals(e.password)))) {
+                    } else if (!(email.text.toString() == (dados.email) && (passwordInserida.text.toString() == (dados.password)))) {
 
                         Toast.makeText(this@Login, R.string.Error_login, Toast.LENGTH_SHORT).show()
                     }
