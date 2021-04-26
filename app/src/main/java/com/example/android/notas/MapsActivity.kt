@@ -1,36 +1,48 @@
 package com.example.android.notas
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.aplicacao.android.notas.R
 import com.example.android.notas.api.EndPoints
+import com.example.android.notas.api.Pontos
 import com.example.android.notas.api.ServiceBuilder
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-
+    private lateinit var pontos: List<Pontos>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getPontos()
+        var position: LatLng
+        val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
+        )
     }
 
     /**
@@ -46,9 +58,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val zone = LatLng(12.000, 12.0000)
+        val zoomLevel = 60f
+
+        /* mMap.moveCamera(CameraUpdateFactory.newLatLng(zone))*/
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
     }
 
     fun sair(view: View) {

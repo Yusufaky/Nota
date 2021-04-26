@@ -40,7 +40,7 @@ class Login : AppCompatActivity() {
         val passwordInserida = findViewById<EditText>(R.id.passEdit)
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.postTest(email.text.toString(), passwordInserida.text.toString())
+        val call = request.postLogin(email.text.toString(), passwordInserida.text.toString())
         var intent = Intent(this, MapsActivity::class.java)
 
         if (email.text.isNullOrEmpty() || passwordInserida.text.isNullOrEmpty()) {
