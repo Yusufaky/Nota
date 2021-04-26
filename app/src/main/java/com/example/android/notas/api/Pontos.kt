@@ -8,5 +8,5 @@ data class Pontos(
         val nome: String,
         val foto: String,
         val descricao: String,
-        val id_user: Int,
+        val user_id: Int,
 )

@@ -29,10 +29,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var pontos: List<Pontos>
+    private lateinit var anomalia: List<Pontos>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -43,6 +45,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
         )
+
+        //verificar se os utilizadores sao os mesmo para ver se a cor dos pontos e igual
+        call.enqueue(object : Callback<List<Pontos>>{
+            override fun onResponse(call: Call<List<Pontos>>, response: Response<List<Pontos>>) {
+                if (response.isSuccessful){
+                    anomalia = response.body()!!
+                    for(anomalia1 in anomalia){
+                        position = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+
+                        if (anomalia1.user_id == sharedPref.all[getString(R.string.user_id)]){
+
+                            mMap.addMarker(MarkerOptions()
+                                    .position(position)
+                                    .title(anomalia1.nome)
+                                    .snippet(anomalia1.descricao + " " + anomalia1.foto + " " + anomalia1.user_id + " " + sharedPref.all[getString(R.string.user_id)].toString())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+
+                            )
+                        }else {
+                            mMap.addMarker(
+                                    MarkerOptions()
+                                            .position(position)
+                                            .title(anomalia1.nome)
+                                            .snippet(anomalia1.descricao + " " + anomalia1.foto + " " + anomalia1.user_id.toString())
+                            )
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Pontos>>, t: Throwable) {
+                Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
     }
 
     /**
@@ -57,11 +95,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val zone = LatLng(12.000, 12.0000)
-        val zoomLevel = 60f
+        val zone = LatLng(41.637682, -8.697163)
+        val zoomLevel = 15f
 
-        /* mMap.moveCamera(CameraUpdateFactory.newLatLng(zone))*/
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
     }
 
