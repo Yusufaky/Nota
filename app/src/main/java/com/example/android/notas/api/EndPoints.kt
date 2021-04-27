@@ -13,7 +13,11 @@ interface EndPoints {
 
     @FormUrlEncoded
     @POST("myslim/api/utilizador/login")
-    fun postTest(@Field("email") first: String, @Field ("password") second: String): Call<OutputPost>
+    fun postLogin(@Field("email") first: String, @Field ("password") second: String): Call<OutputPost>
+
+    @GET("myslim/api/pontos")
+    fun getPontos(): Call<List<Pontos>>
+
 
     @GET("myslim/api/pontos")
     fun getPontos(): Call<List<Pontos>>

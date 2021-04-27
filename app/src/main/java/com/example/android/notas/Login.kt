@@ -25,10 +25,11 @@ class Login : AppCompatActivity() {
         val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
         )
-        if (sharedPref != null){
-            if(sharedPref.all[getString(R.string.loginshared)]==true){
+        if (sharedPref != null) {
+            if (sharedPref.all[getString(R.string.loginshared)] == true) {
                 var intent = Intent(this, MapsActivity::class.java)
                 startActivity(intent)
+                finish()
 
             }
         }
@@ -39,43 +40,46 @@ class Login : AppCompatActivity() {
         val passwordInserida = findViewById<EditText>(R.id.passEdit)
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.postTest(email.text.toString(),passwordInserida.text.toString())
+        val call = request.postLogin(email.text.toString(), passwordInserida.text.toString())
         var intent = Intent(this, MapsActivity::class.java)
 
-        if(email.text.isNullOrEmpty() || passwordInserida.text.isNullOrEmpty()){
+        if (email.text.isNullOrEmpty() || passwordInserida.text.isNullOrEmpty()) {
 
-            if(email.text.isNullOrEmpty() && !passwordInserida.text.isNullOrEmpty()){
+            if (email.text.isNullOrEmpty() && passwordInserida.text.isNullOrEmpty()) {
+                Log.d("**TESTE", "Aqui sem nada")
+                Toast.makeText(this@Login, R.string.noData, Toast.LENGTH_SHORT).show()
+            }
+            if (email.text.isNullOrEmpty() && !passwordInserida.text.isNullOrEmpty()) {
                 Toast.makeText(this@Login, R.string.emailLogin, Toast.LENGTH_SHORT).show()
             }
-            if(!email.text.isNullOrEmpty() && passwordInserida.text.isNullOrEmpty()){
+            if (!email.text.isNullOrEmpty() && passwordInserida.text.isNullOrEmpty()) {
                 Toast.makeText(this@Login, R.string.pass_login, Toast.LENGTH_SHORT).show()
             }
-            if(email.text.isNullOrEmpty() && passwordInserida.text.isNullOrEmpty()){
-                Toast.makeText(this@Login, R.string.pass_login + R.string.emailLogin, Toast.LENGTH_SHORT).show()
-            }
+
         }
 
-        call.enqueue(object : Callback<OutputPost>{
+        call.enqueue(object : Callback<OutputPost> {
             override fun onResponse(call: Call<OutputPost>, response: Response<OutputPost>) {
-                if (response.isSuccessful){
-                    val e: OutputPost = response.body()!!
+                if (response.isSuccessful) {
+                    val dados: OutputPost = response.body()!!
 
-                    //Confirmação login
-                    if(email.text.toString().equals(e.email) && (passwordInserida.text.toString().equals(e.password))){
+
+                    if (email.text.toString() == (dados.email) && (passwordInserida.text.toString() == (dados.password))) {
                         startActivity(intent)
+                        finish()
 
-                        //Shared Preferences Login
+
+
                         val sharedPref: SharedPreferences = getSharedPreferences(
                                 getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
                         )
-                        with(sharedPref.edit()){
+                        with(sharedPref.edit()) {
                             putBoolean(getString(R.string.loginshared), true)
                             putString(getString(R.string.novoEmail), "${email.text}")
-                            putInt(getString(R.string.user_id), e.id)
+                            putInt(getString(R.string.user_id), dados.id)
                             commit()
-                            Log.d("**TESTE","${e.id}" )
                         }
-                    }else if (!(email.text.toString().equals(e.email) && (passwordInserida.text.toString().equals(e.password)))){
+                    } else if (!(email.text.toString() == (dados.email) && (passwordInserida.text.toString() == (dados.password)))) {
 
                         Toast.makeText(this@Login, R.string.Error_login, Toast.LENGTH_SHORT).show()
                     }
@@ -84,12 +88,9 @@ class Login : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<OutputPost>, t: Throwable) {
-                Toast.makeText(this@Login, R.string.Error_Error, Toast.LENGTH_SHORT).show()
 
             }
         })
-
-
 
 
     }

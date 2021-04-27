@@ -27,4 +27,6 @@
     <string name="user_id" translatable="false">idloginuser</string>
     <string name="Error_login">Invalid data</string>
     <string name="Error_Error">Error</string>
+    <string name="noData">No Data</string>
+    <string name="logout" translatable="false">Logout</string>
 </resources>

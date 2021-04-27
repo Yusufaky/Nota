@@ -22,4 +22,5 @@
     <string name="pass_login">Inserir a password</string>
     <string name="Error_login">Dados invalidos</string>
     <string name="Error_Error">Erro</string>
+    <string name="noData">Sem dados</string>
 </resources>
