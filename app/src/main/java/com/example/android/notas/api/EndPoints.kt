@@ -17,10 +17,4 @@ interface EndPoints {
 
     @GET("myslim/api/pontos")
     fun getPontos(): Call<List<Pontos>>
-
-
-    @GET("myslim/api/pontos")
-    fun getPontos(): Call<List<Pontos>>
-
-
 }
