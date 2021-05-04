@@ -6,7 +6,6 @@ data class Pontos(
         val latitude: String,
         val longitude: String,
         val nome: String,
-        val foto: String,
-        val descricao: String,
         val user_id: Int,
+        val id_Tipo: String,
 )

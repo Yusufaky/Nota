@@ -1,19 +1,24 @@
 package com.example.android.notas
 
+import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import com.aplicacao.android.notas.R
 import com.example.android.notas.api.EndPoints
 import com.example.android.notas.api.Pontos
 import com.example.android.notas.api.ServiceBuilder
+import com.google.android.gms.location.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,8 +33,14 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var mapa: GoogleMap
+    private lateinit var mMap: GoogleMap
     private lateinit var anomalia: List<Pontos>
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var lastLocation: Location
+    private val LOCATION_PERMISSION_REQUEST_CODE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,46 +50,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.getPontos()
-        var position: LatLng
-        val sharedPref: SharedPreferences = getSharedPreferences(
-                getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
-        )
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        //verificar se os utilizadores sao os mesmo para ver se a cor dos pontos e igual
-        call.enqueue(object : Callback<List<Pontos>>{
-            override fun onResponse(call: Call<List<Pontos>>, response: Response<List<Pontos>>) {
-                if (response.isSuccessful){
-                    anomalia = response.body()!!
-                    for(anomalia1 in anomalia){
-                        position = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
-
-                        if (anomalia1.user_id == sharedPref.all[getString(R.string.user_id)]){
-
-                            mapa.addMarker(MarkerOptions()
-                                    .position(position)
-                                    .title(anomalia1.nome)
-                                    .snippet("Descrição: "+anomalia1.descricao)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-
-                            )
-                        }else {
-                            mapa.addMarker(
-                                    MarkerOptions()
-                                            .position(position)
-                                            .title(anomalia1.nome)
-                                            .snippet("Descrição: "+anomalia1.descricao)
-                            )
-                        }
-                    }
-                }
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                super.onLocationResult(p0)
+                lastLocation = p0.lastLocation
+                var loc = LatLng(lastLocation.latitude, lastLocation.longitude)
+                Log.d("pontos", "coordenadas" + loc.latitude + "- " + loc.longitude)
             }
-
-            override fun onFailure(call: Call<List<Pontos>>, t: Throwable) {
-                Toast.makeText(this@MapsActivity, "${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+        }
+        createLocationRequest()
 
 
     }
@@ -93,12 +75,68 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        mapa = googleMap
+        mMap = googleMap
 
-        val zone = LatLng(41.637682, -8.697163)
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getPontos()
+        var posicao: LatLng
+        val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
+        )
+
+        //verificar se os utilizadores sao os mesmo para ver se a cor dos pontos e igual
+        call.enqueue(object : Callback<List<Pontos>> {
+            override fun onResponse(call: Call<List<Pontos>>, response: Response<List<Pontos>>) {
+                if (response.isSuccessful) {
+                    anomalia = response.body()!!
+                    for (anomalia1 in anomalia) {
+                        posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+
+                        if (anomalia1.user_id == sharedPref.all[getString(R.string.user_id)]) {
+
+                            mMap.addMarker(MarkerOptions()
+                                    .position(posicao)
+                                    .title(anomalia1.nome)
+                                    .snippet("Descrição: " + anomalia1.nome)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+
+                            )
+                        } else {
+                            mMap.addMarker(
+                                    MarkerOptions()
+                                            .position(posicao)
+                                            .title(anomalia1.nome)
+                                            .snippet("Descrição: " + anomalia1.nome)
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
+
+                            )
+                        }
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Pontos>>, t: Throwable) {
+                Toast.makeText(this@MapsActivity, R.string.Error_Error, Toast.LENGTH_SHORT).show()
+            }
+        })
         val zoomLevel = 15f
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                return
+            }
+            return
+        }
+        mMap.isMyLocationEnabled = true
 
-        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(zone, zoomLevel))
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            if (location != null) {
+                lastLocation = location
+                val currenteLatLng = LatLng(location.latitude, location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currenteLatLng, zoomLevel))
+            }
+        }
     }
 
     fun sair(view: View) {
@@ -115,6 +153,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         startActivity(intent)
         finish()
         Toast.makeText(this, R.string.logout, Toast.LENGTH_SHORT).show()
+    }
+
+    private  fun createLocationRequest(){
+        locationRequest = LocationRequest()
+
+        locationRequest.interval=1000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
 }

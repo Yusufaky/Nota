@@ -3,10 +3,16 @@ package com.example.android.notas
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.aplicacao.android.notas.R
@@ -17,10 +23,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Login : AppCompatActivity() {
+class Login : AppCompatActivity(), SensorEventListener {
+
+    private lateinit var sensorManager: SensorManager
+    private var prox: Sensor? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        prox = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
         val sharedPref: SharedPreferences = getSharedPreferences(
                 getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
@@ -69,7 +80,6 @@ class Login : AppCompatActivity() {
                         finish()
 
 
-
                         val sharedPref: SharedPreferences = getSharedPreferences(
                                 getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
                         )
@@ -88,12 +98,41 @@ class Login : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<OutputPost>, t: Throwable) {
-
+                Toast.makeText(this@Login, R.string.Error_login, Toast.LENGTH_SHORT).show()
             }
         })
 
 
     }
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+        // Do something here if sensor accuracy changes.
+        return
+    }
 
+    override fun onSensorChanged(event: SensorEvent) {
+        val value = event.values[0]
+        Log.d("prox", value.toString())
+        val teste = findViewById<Button>(R.id.login)
+        // Do something with this sensor data.
+        if (value < 15) {
+            teste.setBackgroundColor(Color.GREEN)
+        } else {
+            teste.setBackgroundColor(Color.BLUE)
+        }
+
+
+    }
+
+    override fun onResume() {
+        // Register a listener for the sensor.
+        super.onResume()
+        sensorManager.registerListener(this, prox, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+    override fun onPause() {
+        // Be sure to unregister the sensor when the activity pauses.
+        super.onPause()
+        sensorManager.unregisterListener(this)
+    }
 
 }
