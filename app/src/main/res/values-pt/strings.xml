@@ -23,4 +23,10 @@
     <string name="Error_login">Dados invalidos</string>
     <string name="Error_Error">Erro</string>
     <string name="noData">Sem dados</string>
+    <string name="adicionarponto">Adicionar Ponto</string>
+    <string name="problema">Problema</string>
+    <string name="obras">obras</string>
+    <string name="acidentes">acidentes</string>
+    <string name="Campos_vazios">Algum dos Campos encontram-se vazios</string>
+    <string name="fail">Falhou</string>
 </resources>

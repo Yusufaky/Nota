@@ -30,6 +30,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -62,6 +63,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         createLocationRequest()
 
+        val fabponto = findViewById<FloatingActionButton>(R.id.btnAdd)
+        fabponto.setOnClickListener {
+
+            val intent = Intent(this, NovoPonto::class.java)
+            startActivity(intent)
+        }
 
     }
 

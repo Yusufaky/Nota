@@ -12,7 +12,7 @@
     <string name="updat">Update</string>
     <string name="descri_ao">Description</string>
     <string name="emailLogin">Insert an email</string>
-
+    <string name="fail">FAIL</string>
     <string name="loginTitulo">Login</string>
     <string name="nameLogin">Email:</string>
     <string name="passwordLogin">Password:</string>
@@ -22,11 +22,15 @@
     <string name="loginSharePreferences" translatable="false">LoginSharePreferences</string>
     <string name="title_activity_maps" translatable="false">Map</string>
     <string name="pass_login">Insert a password</string>
-
     <string name="novoEmail" translatable="false">emailshared</string>
     <string name="user_id" translatable="false">idloginuser</string>
     <string name="Error_login">Invalid data</string>
     <string name="Error_Error">Error</string>
     <string name="noData">No Data</string>
     <string name="logout" translatable="false">Logout</string>
+    <string name="adicionarponto">Add Point</string>
+    <string name="problema">Problem</string>
+    <string name="obras">construction</string>
+    <string name="acidentes">accidents</string>
+    <string name="Campos_vazios">Some of the fields were studied empty</string>
 </resources>
