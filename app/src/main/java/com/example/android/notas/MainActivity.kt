@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Do something here if sensor accuracy changes.
         return
     }
-
+//sensor
     override fun onSensorChanged(event: SensorEvent) {
         val value = event.values[0]
         val teste = findViewById<Button>(R.id.pagNotas)
