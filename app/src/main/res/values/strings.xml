@@ -33,4 +33,5 @@
     <string name="obras">construction</string>
     <string name="acidentes">accidents</string>
     <string name="Campos_vazios">Some of the fields were studied empty</string>
+    <string name="permissoes">There are no prizes for this operation</string>
 </resources>

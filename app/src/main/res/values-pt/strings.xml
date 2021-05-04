@@ -10,7 +10,7 @@
     <string name="edit">Editar</string>
     <string name="delete">Apagar</string>
     <string name="map">Mapa</string>
-    <string name="updat">Atualizado</string>
+    <string name="updat">Atualizar</string>
     <string name="descri_ao">Descriçao</string>
     <string name="loginTitulo">Login</string>
     <string name="nameLogin">Email:</string>
@@ -29,4 +29,5 @@
     <string name="acidentes">acidentes</string>
     <string name="Campos_vazios">Algum dos Campos encontram-se vazios</string>
     <string name="fail">Falhou</string>
+    <string name="permissoes">Não possui permissões para esta operação</string>
 </resources>

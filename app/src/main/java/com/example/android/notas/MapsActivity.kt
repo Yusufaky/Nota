@@ -106,7 +106,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mMap.addMarker(MarkerOptions()
                                     .position(posicao)
                                     .title(anomalia1.nome)
-                                    .snippet("Descrição: " + anomalia1.nome)
+                                    .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}" + "_" + "${sharedPref.all[getString(R.string.user_id)]}")
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
                             )
@@ -115,7 +115,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     MarkerOptions()
                                             .position(posicao)
                                             .title(anomalia1.nome)
-                                            .snippet("Descrição: " + anomalia1.nome)
+                                            .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}" + "_" + "${sharedPref.all[getString(R.string.user_id)]}")
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
 
                             )
@@ -129,6 +129,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(this@MapsActivity, R.string.Error_Error, Toast.LENGTH_SHORT).show()
             }
         })
+
+        mMap.setOnInfoWindowClickListener { marker ->
+            val intent = Intent(this, deleteUpdate::class.java).apply{
+                putExtra("nome", marker.title)
+                putExtra("Tudo", marker.snippet)
+                putExtra("Posicao", marker.position)
+            }
+            startActivity(intent)
+        }
         val zoomLevel = 15f
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -146,8 +155,36 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currenteLatLng, zoomLevel))
             }
         }
+
+    }
+    private fun startLocationUpdates(){
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+            return
+        }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
 
+
+    private  fun createLocationRequest(){
+        locationRequest = LocationRequest()
+
+        locationRequest.interval=1000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
+
+    override fun onPause() {
+        super.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+    }
+
+
+
+    public override fun onResume() {
+        super.onResume()
+        startLocationUpdates()
+    }
     fun sair(view: View) {
 
         val sharedPref: SharedPreferences = getSharedPreferences(
@@ -163,12 +200,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         finish()
         Toast.makeText(this, R.string.logout, Toast.LENGTH_SHORT).show()
     }
-
-    private  fun createLocationRequest(){
-        locationRequest = LocationRequest()
-
-        locationRequest.interval=1000
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-    }
-
 }

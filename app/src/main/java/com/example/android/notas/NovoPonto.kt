@@ -80,7 +80,6 @@ class NovoPonto : AppCompatActivity() {
                 Toast.makeText(this@NovoPonto, getString(R.string.Campos_vazios), Toast.LENGTH_SHORT).show()
             } else {
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
-                Log.d("dados", nome.text.toString() + lastLocation.latitude.toString() + lastLocation.longitude.toString() + "----" + user_id + "----" + tipo)
                 val call = request.postNovoPonto(nome.text.toString(), lastLocation.latitude, lastLocation.longitude, user_id.toInt(), tipo)
 
                 call.enqueue(object : Callback<Pontos> {
@@ -96,7 +95,6 @@ class NovoPonto : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<Pontos>, t: Throwable) {
-                        Toast.makeText(this@NovoPonto, getString(R.string.fail), Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@NovoPonto, MapsActivity::class.java)
                         startActivity(intent)
                         finish()
