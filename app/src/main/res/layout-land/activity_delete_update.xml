@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.notas.deleteUpdate">
+
+
+    <EditText
+        android:id="@+id/UpdatePontoEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+
+        android:hint="@string/problema"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/UpdatePonto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UpdatePontoEdit">
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/UpdatePonto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="76dp"
+        android:text="@string/updat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/DeletePonto"
+        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/DeletePonto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="68dp"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RadioButton
+        android:id="@+id/AcidenteE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/acidentes"
+        app:layout_constraintBottom_toTopOf="@+id/ObrasE"
+        app:layout_constraintTop_toBottomOf="@+id/UpdatePontoEdit"
+        tools:layout_editor_absoluteX="298dp" />
+
+    <RadioButton
+        android:id="@+id/ObrasE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/obras"
+        app:layout_constraintBottom_toTopOf="@+id/UpdatePonto"
+        tools:layout_editor_absoluteX="269dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
