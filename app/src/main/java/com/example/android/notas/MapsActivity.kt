@@ -24,7 +24,6 @@ import com.google.android.gms.location.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
