@@ -10,6 +10,8 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -132,14 +134,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         })
 
         mMap.setOnInfoWindowClickListener { marker ->
-            val intent = Intent(this, deleteUpdate::class.java).apply{
+            val intent = Intent(this, deleteUpdate::class.java).apply {
                 putExtra("nome", marker.title)
                 putExtra("Tudo", marker.snippet)
                 putExtra("Posicao", marker.position)
             }
             startActivity(intent)
         }
-        val zoomLevel = 15f
+        val zoomLevel = 30f
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
@@ -158,8 +160,148 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
-    private fun startLocationUpdates(){
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_maps, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val sharedPref: SharedPreferences = getSharedPreferences(
+                getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
+        )
+        return when (item.itemId) {
+            R.id.action_acidentes -> {
+                mMap.clear()
+
+                var posicao: LatLng
+                Log.d("ponto", anomalia.toString())
+                for (anomalia1 in anomalia) {
+                    posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+                    if (anomalia1.id_Tipo.toInt() == 2) {
+                        mMap.addMarker(MarkerOptions()
+                                .position(posicao)
+                                .title(anomalia1.nome)
+                                .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+
+                        )
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
+                }
+
+                return true
+            }
+            R.id.action_obras -> {
+                mMap.clear()
+
+                var posicao: LatLng
+                for (anomalia1 in anomalia) {
+                    posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+                    if (anomalia1.id_Tipo.toInt() == 1) {
+                        mMap.addMarker(MarkerOptions()
+                                .position(posicao)
+                                .title(anomalia1.nome)
+                                .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+
+                        )
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
+                }
+
+                return true
+            }
+
+            R.id.nenhum -> {
+                mMap.clear()
+
+                var posicao: LatLng
+                for (anomalia1 in anomalia) {
+                    posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+
+                    if (anomalia1.user_id == sharedPref.all[getString(R.string.user_id)]) {
+
+                        mMap.addMarker(MarkerOptions()
+                                .position(posicao)
+                                .title(anomalia1.nome)
+                                .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+
+                        )
+                    } else {
+                        mMap.addMarker(
+                                MarkerOptions()
+                                        .position(posicao)
+                                        .title(anomalia1.nome)
+                                        .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
+
+                        )
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
+                }
+
+                return true
+            }
+            R.id.action_2500 -> {
+                val startPoint = Location("locationA")
+                startPoint.setLatitude(lastLocation.latitude)
+                startPoint.setLongitude(lastLocation.longitude)
+                mMap.clear()
+
+                var posicao: LatLng
+                for (anomalia1 in anomalia) {
+                    posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+                    val endPoint = Location("locationA")
+                    endPoint.setLatitude(anomalia1.latitude.toDouble())
+                    endPoint.setLongitude(anomalia1.longitude.toDouble())
+                    if (startPoint.distanceTo(endPoint) < 2500) {
+                        mMap.addMarker(MarkerOptions()
+                                .position(posicao)
+                                .title(anomalia1.nome)
+                                .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+
+                        )
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
+                }
+
+                return true
+            }
+            R.id.action_10000 -> {
+                val startPoint = Location("locationA")
+                startPoint.setLatitude(lastLocation.latitude)
+                startPoint.setLongitude(lastLocation.longitude)
+                mMap.clear()
+
+                var posicao: LatLng
+                for (anomalia1 in anomalia) {
+                    posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
+                    val endPoint = Location("locationA")
+                    endPoint.setLatitude(anomalia1.latitude.toDouble())
+                    endPoint.setLongitude(anomalia1.longitude.toDouble())
+                    if (startPoint.distanceTo(endPoint) < 10000) {
+                        mMap.addMarker(MarkerOptions()
+                                .position(posicao)
+                                .title(anomalia1.nome)
+                                .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+
+                        )
+                    }
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
+                }
+
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
             return
         }
@@ -168,10 +310,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-    private  fun createLocationRequest(){
+    private fun createLocationRequest() {
         locationRequest = LocationRequest()
 
-        locationRequest.interval=1000
+        locationRequest.interval = 1000
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
@@ -181,11 +323,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-
     public override fun onResume() {
         super.onResume()
         startLocationUpdates()
     }
+
     fun sair(view: View) {
 
         val sharedPref: SharedPreferences = getSharedPreferences(

@@ -30,4 +30,5 @@
     <string name="Campos_vazios">Algum dos Campos encontram-se vazios</string>
     <string name="fail">Falhou</string>
     <string name="permissoes">Não possui permissões para esta operação</string>
+    <string name="limpar">Limpar</string>
 </resources>
