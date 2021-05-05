@@ -34,4 +34,7 @@
     <string name="acidentes">accidents</string>
     <string name="Campos_vazios">Some of the fields were studied empty</string>
     <string name="permissoes">There are no prizes for this operation</string>
+    <string name="_1000_metros" translatable="false">10000 m</string>
+    <string name="_500_metros" translatable="false">2500 m</string>
+    <string name="limpar">Clear</string>
 </resources>
