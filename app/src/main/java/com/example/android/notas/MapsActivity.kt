@@ -59,7 +59,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
                 var loc = LatLng(lastLocation.latitude, lastLocation.longitude)
-                Log.d("pontos", "coordenadas" + loc.latitude + "- " + loc.longitude)
             }
         }
         createLocationRequest()
@@ -173,7 +172,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.clear()
 
                 var posicao: LatLng
-                Log.d("ponto", anomalia.toString())
                 for (anomalia1 in anomalia) {
                     posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
                     if (anomalia1.id_Tipo.toInt() == 2) {
@@ -217,15 +215,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 var posicao: LatLng
                 for (anomalia1 in anomalia) {
                     posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
-
                     if (anomalia1.user_id == sharedPref.all[getString(R.string.user_id)]) {
-
                         mMap.addMarker(MarkerOptions()
                                 .position(posicao)
                                 .title(anomalia1.nome)
                                 .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-
                         )
                     } else {
                         mMap.addMarker(
@@ -234,7 +229,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         .title(anomalia1.nome)
                                         .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
-
                         )
                     }
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
@@ -247,7 +241,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 startPoint.setLatitude(lastLocation.latitude)
                 startPoint.setLongitude(lastLocation.longitude)
                 mMap.clear()
-
                 var posicao: LatLng
                 for (anomalia1 in anomalia) {
                     posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
@@ -260,7 +253,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 .title(anomalia1.nome)
                                 .snippet("${anomalia1.id}" + "_" + "${anomalia1.nome}" + "_" + "${anomalia1.latitude}" + "_" + "${anomalia1.longitude}" + "_" + "${anomalia1.user_id}" + "_" + "${anomalia1.id_Tipo}")
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-
                         )
                     }
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(posicao))
@@ -273,7 +265,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 startPoint.setLatitude(lastLocation.latitude)
                 startPoint.setLongitude(lastLocation.longitude)
                 mMap.clear()
-
                 var posicao: LatLng
                 for (anomalia1 in anomalia) {
                     posicao = LatLng(anomalia1.latitude.toDouble(), anomalia1.longitude.toDouble())
@@ -297,7 +288,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
     private fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
@@ -306,7 +296,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
-
 
     private fun createLocationRequest() {
         locationRequest = LocationRequest()
@@ -319,7 +308,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onPause()
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
-
 
     public override fun onResume() {
         super.onResume()

@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/obrasN"
+            android:id="@+id/obrasEditar"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:text="@string/obras" />

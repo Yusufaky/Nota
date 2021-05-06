@@ -11,13 +11,13 @@
         android:id="@+id/UpdatePontoEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:ems="10"
 
+        android:layout_marginTop="90dp"
+        android:ems="10"
         android:hint="@string/problema"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +49,7 @@
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="260dp"
         android:text="@string/updat"
+        app:backgroundTint="#003502"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/DeletePonto"
         app:layout_constraintHorizontal_bias="0.736"
@@ -61,6 +62,7 @@
         android:layout_marginEnd="56dp"
         android:layout_marginBottom="260dp"
         android:text="@string/delete"
+        app:backgroundTint="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -8,7 +8,6 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -50,17 +49,14 @@ class NovoPonto : AppCompatActivity() {
                 super.onLocationResult(p0)
                 lastLocation = p0.lastLocation
                 var loc = LatLng(lastLocation.latitude, lastLocation.longitude)
-                //Log.d("pontos", "coordenadas" + loc.latitude + "- " + loc.longitude)
             }
         }
         createLocationRequest()
 
-
-
         nome = findViewById<EditText>(R.id.pontoproblema)
         var tipo = 0
         val tipoacidente = findViewById<View>(R.id.AcidenteN) as RadioButton
-        val tipoobras = findViewById<View>(R.id.obrasN) as RadioButton
+        val tipoobras = findViewById<View>(R.id.obrasEditar) as RadioButton
         tipoacidente.setOnClickListener{
             tipo=2
             Toast.makeText(this, R.string.acidentes, Toast.LENGTH_SHORT).show()
@@ -70,9 +66,7 @@ class NovoPonto : AppCompatActivity() {
             Toast.makeText(this, R.string.obras, Toast.LENGTH_SHORT).show()
         }
 
-
         val user_id = sharedPref.all[getString(R.string.user_id)].toString()
-
 
         val button = findViewById<Button>(R.id.Novoponto)
         button.setOnClickListener {
@@ -115,9 +109,6 @@ class NovoPonto : AppCompatActivity() {
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
     }
-
-
-
 
     private  fun createLocationRequest(){
         locationRequest = LocationRequest()

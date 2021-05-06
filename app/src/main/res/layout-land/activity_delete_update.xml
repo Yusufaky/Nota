@@ -7,17 +7,27 @@
     tools:context="com.example.android.notas.deleteUpdate">
 
 
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/UpdatePonto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UpdatePontoEdit">
+
+    </RadioGroup>
+
     <EditText
         android:id="@+id/UpdatePontoEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
 
         android:hint="@string/problema"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +35,6 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/UpdatePonto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/UpdatePontoEdit">
@@ -36,12 +45,11 @@
         android:id="@+id/UpdatePonto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
         android:layout_marginBottom="76dp"
         android:text="@string/updat"
+        app:backgroundTint="#003502"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/DeletePonto"
-        app:layout_constraintHorizontal_bias="0.445"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -51,8 +59,23 @@
         android:layout_marginEnd="144dp"
         android:layout_marginBottom="68dp"
         android:text="@string/delete"
+        app:backgroundTint="#FF0000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
     <RadioButton
         android:id="@+id/AcidenteE"
@@ -60,8 +83,10 @@
         android:layout_height="wrap_content"
         android:text="@string/acidentes"
         app:layout_constraintBottom_toTopOf="@+id/ObrasE"
-        app:layout_constraintTop_toBottomOf="@+id/UpdatePontoEdit"
-        tools:layout_editor_absoluteX="298dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/UpdatePontoEdit" />
 
     <RadioButton
         android:id="@+id/ObrasE"
@@ -69,6 +94,9 @@
         android:layout_height="wrap_content"
         android:text="@string/obras"
         app:layout_constraintBottom_toTopOf="@+id/UpdatePonto"
-        tools:layout_editor_absoluteX="269dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AcidenteE" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

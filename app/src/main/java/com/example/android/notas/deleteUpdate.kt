@@ -26,9 +26,6 @@ class deleteUpdate : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_delete_update)
 
-        val sharedPref: SharedPreferences = getSharedPreferences(
-                getString(R.string.loginSharePreferences), Context.MODE_PRIVATE
-        )
         editponto = findViewById(R.id.UpdatePontoEdit)
 
         var nome: String? =intent.getStringExtra("nome")
@@ -58,7 +55,6 @@ class deleteUpdate : AppCompatActivity() {
 
             if(id_user == id_userShare) {
                 val request = ServiceBuilder.buildService(EndPoints::class.java)
-                Log.d("ads", id.toString())
                 val call = request.delete(id)
 
                 call.enqueue(object : Callback<Pontos> {
